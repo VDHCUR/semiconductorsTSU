@@ -12,7 +12,7 @@ class CoopsController extends Controller
     public function index()
     {
         return view('coop.index', [
-            'coops' => Coops::where('deleted', 0)->where('global', 0)->latest()->get(),
+            'coops' => Coops::where('global', 0)->latest()->get(),
             'globals' => Coops::where('deleted', 0)->where('global', 1)->latest()->get(),
         ]);
     }
@@ -88,7 +88,7 @@ class CoopsController extends Controller
     public function admin()
     {
         return view('admin.coops', [
-            'coops' => Coops::where('deleted', 0)->latest()->get()
+            'coops' => Coops::latest()->get()
         ]);
     }
 

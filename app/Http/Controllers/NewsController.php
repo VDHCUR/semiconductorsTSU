@@ -10,26 +10,23 @@ use App\Http\Requests\NewsStoreRequest;
 use App\Http\Resources\NewsResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Scopes\ExistScope;
 
 class NewsController extends Controller
 {
     public function index()
     {
-        // dd(NewsResource::collection(News::latest()->take(15)->get())[0]->new_images);
-
         return view('news.all', [
-            'news' => News::where('deleted', 0)->where('new_header', '!=', 'История кафедры')->latest()->get()
+            'news' => News::where('new_header', '!=', 'История кафедры')->latest()->get()
         ]);
     }
 
     public function show(News $new)
     {
-        if ($new->deleted === 0) {
-            if ($new->new_header !== 'История кафедры') {
-                return view('news.one', [
-                    'new' => $new
-                ]);
-            }
+        if ($new->deleted === 0 && $new->new_header !== 'История кафедры') {
+            return view('news.one', [
+                'new' => $new
+            ]);
         }
 
         return abort(404);
@@ -67,13 +64,10 @@ class NewsController extends Controller
 
     public function edit(News $new)
     {
-
-        if ($new->deleted === 0) {
-            if ($new->new_header !== 'История кафедры') {
-                return view('news.edit', [
-                    'new' => $new
-                ]);
-            }
+        if ($new->new_header !== 'История кафедры') {
+            return view('news.edit', [
+                'new' => $new
+            ]);
         }
 
         return abort(404);
@@ -126,7 +120,7 @@ class NewsController extends Controller
             'deleted' => 1
         ]);
 
-        foreach ($new->new_images as $image){
+        foreach ($new->new_images as $image) {
             $image->update([
                 'deleted' => 1
             ]);
@@ -142,35 +136,35 @@ class NewsController extends Controller
     public function admin()
     {
         return view('admin.news', [
-            'news' => News::where('deleted', 0)->where('new_header', '!=', 'История кафедры')->latest()->get(),
+            'news' => News::where('new_header', '!=', 'История кафедры')->latest()->get(),
         ]);
     }
 
     public function mainpage()
     {
         return view('index', [
-            'news' => NewsResource::collection(News::where('deleted', 0)->where('new_header', '!=', 'История кафедры')->latest()->take(5)->get())
+            'news' => NewsResource::collection(News::where('new_header', '!=', 'История кафедры')->latest()->take(5)->get())
         ]);
     }
 
     public function history()
     {
         return view('about.history', [
-            'new' => News::where('deleted', 0)->where('new_header', '=', 'История кафедры')->latest()->first()
+            'new' => News::where('new_header', '=', 'История кафедры')->latest()->first()
         ]);
     }
 
     public function history_edit()
     {
         return view('admin.history_edit', [
-            'new' => News::where('deleted', 0)->where('new_header', '=', 'История кафедры')->latest()->first()
+            'new' => News::where('new_header', '=', 'История кафедры')->latest()->first()
         ]);
     }
 
     public function history_update(HistoriesUpdateRequest $request)
     {
 
-        $new = News::where('deleted', 0)->where('new_header', '=', 'История кафедры')->latest()->first();
+        $new = News::where('new_header', '=', 'История кафедры')->latest()->first();
         if (!empty($request->img_to_delete)) {
             foreach ($request->img_to_delete as $id) {
                 NewImages::where('id', $id)->update([
@@ -203,7 +197,7 @@ class NewsController extends Controller
     public function history_admin()
     {
         return view('admin.history_admin', [
-            'new' => News::where('deleted', 0)->where('new_header', '=', 'История кафедры')->latest()->first()
+            'new' => News::where('new_header', '=', 'История кафедры')->latest()->first()
         ]);
     }
 }

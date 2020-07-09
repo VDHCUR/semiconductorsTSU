@@ -42,6 +42,17 @@ class SubjectsController extends Controller
         ]);
     }
 
+    public function update(Profiles $profile, Subjects $subject, SubjectsStoreRequest $request)
+    {
+        $subject->update([
+            'profiles_id'=>$profile->id,
+            'teacher_id'=>$request->teacher,
+            'name'=>$request->name
+        ]);
+
+        return redirect('/admin/profiles');
+    }
+
     public function destroy(Subjects $subject)
     {
         $subject->update([

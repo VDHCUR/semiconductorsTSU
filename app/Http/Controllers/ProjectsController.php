@@ -13,7 +13,7 @@ class ProjectsController extends Controller
     public function index()
     {
         return view('projects.index', [
-            'projects' => Projects::where('deleted', '=', 0)->where('archived', '=', '0')->get()
+            'projects' => Projects::where('archived', '=', '0')->get()
         ]);
     }
 

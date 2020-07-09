@@ -12,7 +12,7 @@ class PublicationsController extends Controller
     public function index()
     {
         return view('publications.index',[
-            'publications' => Publications::where('deleted', 0)->where('archived', '=', '0')->orderBy('year', 'DESC')->get()
+            'publications' => Publications::where('archived', '=', '0')->orderBy('year', 'DESC')->get()
         ]);
     }
 
@@ -82,14 +82,14 @@ class PublicationsController extends Controller
     public function archive()
     {
         return view('publications.archive', [
-            'publications' => Publications::where('deleted', 0)->where('archived', 1)->orderBy('year', 'DESC')->get()
+            'publications' => Publications::where('archived', 1)->orderBy('year', 'DESC')->get()
         ]);
     }
 
     public function admin()
     {
         return view('admin.publications', [
-            'publications' => Publications::where('deleted', 0)->orderBy('year', 'DESC')->get()
+            'publications' => Publications::orderBy('year', 'DESC')->get()
         ]);
     }
 

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Subjects extends Model
+class Subjects extends ExistModel
 {
     protected $fillable = ['name', 'profiles_id', 'teacher_id', 'deleted'];
 

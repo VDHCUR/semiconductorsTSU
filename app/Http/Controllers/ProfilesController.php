@@ -12,7 +12,7 @@ class ProfilesController extends Controller
 
     public function index()
     {
-        return view('about.profiles.all', ['profiles' => Profiles::where('deleted', 0)->latest()->get()]);
+        return view('about.profiles.all', ['profiles' => Profiles::latest()->get()]);
     }
 
     public function create(){
@@ -23,7 +23,7 @@ class ProfilesController extends Controller
     {
         Profiles::create($request->all());
 
-        return redirect('/profiles');
+        return redirect('/admin/profiles');
     }
 
     public function edit(Profiles $profile)
@@ -39,6 +39,8 @@ class ProfilesController extends Controller
             'name' => $request->name,
             'stage' => $request->stage,
         ]);
+
+        return redirect('/admin/profiles');
     }
 
     public function destroy(Profiles $profile)
@@ -53,24 +55,20 @@ class ProfilesController extends Controller
     
     public function bachelor()
     {
-        return view('about.profiles.bachelor', ['profiles' => Profiles::where([
-            ['deleted', '=', '0'],
-            ['stage', '=', '0']
-        ])->latest()->get()]);
+        return view('about.profiles.bachelor',
+            ['profiles' => Profiles::where('stage', 0)->latest()->get()]);
     }
 
     public function magistr()
     {
-        return view('about.profiles.magistr', ['profiles' => Profiles::where([
-            ['deleted', '=', '0'],
-            ['stage', '=', '1']
-        ])->latest()->get()]);
+        return view('about.profiles.magistr',
+            ['profiles' => Profiles::where('stage', 1)->latest()->get()]);
     }
 
     public function admin()
     {
         return view('admin.profiles', [
-            'profiles' => Profiles::where('deleted', 0)->latest()->get()
+            'profiles' => Profiles::latest()->get()
         ]);
     }
 }

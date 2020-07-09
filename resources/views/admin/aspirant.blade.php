@@ -36,7 +36,7 @@
                         </a>
                     </div>
                     {!! $info -> info !!}
-                    @if(!empty($info->docs))
+                    @if(!empty($info->docs[0]))
                         <h5 class="font-weight-bold py-3">Прикреплённые документы</h5>
                         @foreach($info->docs as $doc)
                             <a href="{{asset($doc->path)}}"><h5 class="pb-2">{{$doc->name}}</h5></a>

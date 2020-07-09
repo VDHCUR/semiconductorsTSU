@@ -29,7 +29,7 @@
                 </h4>
             </div>
         </div>
-        <form action="/profiles/{{$profile->id}}" method="post">
+        <form action="/profiles/{{$profile->id}}/subjects/{{$subject->id}}" method="post">
             @csrf
             @method('PATCH')
             <div class="form-group form-row">

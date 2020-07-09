@@ -64,6 +64,7 @@ Route::get('/student/magistr', 'ProfilesController@magistr');
 
 Route::get('/profiles/{profile}/subjects/create', 'SubjectsController@create')->middleware('auth', 'admin');
 Route::get('/profiles/{profile}/subjects/{subject}/edit', 'SubjectsController@edit')->middleware('auth', 'admin');
+Route::patch('/profiles/{profile}/subjects/{subject}', 'SubjectsController@update')->middleware('auth', 'admin');
 Route::post('/profiles/{profile}', 'SubjectsController@store')->middleware('auth', 'admin');
 Route::delete('/subjects/{subject}', 'SubjectsController@destroy')->middleware('auth', 'admin');
 
