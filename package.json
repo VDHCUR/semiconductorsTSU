@@ -23,6 +23,6 @@
         "bootstrap-fileinput": "^5.0.8",
         "jquery": "^3.4.1",
         "popper.js": "^1.16.1",
-        "tinymce": "^5.2.0"
+        "tinymce": "^5.7.1"
     }
 }
